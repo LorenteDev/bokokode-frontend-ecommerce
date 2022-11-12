@@ -1,10 +1,15 @@
 <template>
-  <Header />
-  <Separator />
-  <FeaturedProduct :featured="featured" />
-  <Separator />
-  <div v-for="product in products" :key="product._id">
-    {{ product.name }}
+  <div v-if="!loading">
+    <Header />
+    <Separator />
+    <FeaturedProduct :featured="featured" />
+    <Separator />
+    <div v-for="product in products" :key="product._id">
+      {{ product.name }}
+    </div>
+  </div>
+  <div v-else>
+    <span>Loading...</span>
   </div>
 </template>
 
@@ -29,6 +34,7 @@ export default defineComponent({
     FeaturedProduct
   },
   setup() {
+    let loading = ref<boolean>(true)
     let paginationData = ref<PaginationData>({} as PaginationData)
     let featured = ref<Product>({} as Product)
     let products = ref<Product[]>([])
@@ -49,12 +55,14 @@ export default defineComponent({
         paginationData.value = pagination as PaginationData
         featured.value = featuredProduct as Product
         products.value = pageProducts as Array<Product>
+        loading.value = false
       })
       .catch((err: AxiosError) => {
         console.error(err)
+        loading.value = false
       })
 
-    return { paginationData, featured, products }
+    return { loading, paginationData, featured, products }
   },
   mounted() {
     document.title = 'BAJAMAS'
