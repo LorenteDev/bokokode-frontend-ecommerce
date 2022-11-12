@@ -11,10 +11,11 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-// separator
 hr {
   height: 3px;
   border: none;
   background-color: #e4e4e4;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 </style>
