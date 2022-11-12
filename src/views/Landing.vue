@@ -1,21 +1,64 @@
 <template>
   <Header />
+  <Separator />
+  <div>
+    FEATURED:
+    {{ featured.name }}
+  </div>
+  <div v-for="product in products" :key="product.id">
+    {{ product.name }}
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
+import axios, { AxiosError, AxiosResponse } from 'axios'
+
+// Types
+import PaginationData from '../types/PaginationData'
+import Product from '../types/Product'
+
+// Components
 import Header from '../components/Header.vue'
+import Separator from '../components/Separator.vue'
 
 export default defineComponent({
   name: 'LandingCommerce',
   components: {
     Header,
+    Separator
   },
-  // setup() {
-  // },
+  setup() {
+    let paginationData = ref<PaginationData>({} as PaginationData)
+    let featured = ref<Product>({} as Product)
+    let products = ref<Product[]>([])
+
+    // Get all products
+    axios.post('https://technical-frontend-api.bokokode.com/api/products')
+      .then((res: AxiosResponse) => {
+        const pagination = res.data.data
+        const pageProducts: Array<Product> = res.data.data.data
+
+        // Move featured one to featured ref
+        const featuredProduct = pageProducts.find((product: Product, index: number) => {
+          return product.featured ? pageProducts.splice(index, 1) : false
+        })
+
+        // Delete 'data' key for paginationData since it's not needed
+        delete pagination['data']
+        paginationData.value = pagination as PaginationData
+        featured.value = featuredProduct as Product
+        products.value = pageProducts as Array<Product>
+      })
+      .catch((err: AxiosError) => {
+        console.error(err)
+      })
+
+    return { paginationData, featured, products }
+  },
   mounted() {
     document.title = 'BAJAMAS'
-  }
+  },
 })
 </script>
 
