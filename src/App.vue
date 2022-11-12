@@ -17,10 +17,4 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-// separator
-hr {
-  height: 3px;
-  border: none;
-  background-color: #e4e4e4;
-}
 </style>

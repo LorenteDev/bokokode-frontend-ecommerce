@@ -4,7 +4,6 @@
       <span id="header-logo"> BEJAMAS_ </span>
       <span id="header-cart"> CART </span>
     </div>
-    <hr />
   </header>
 </template>
 
