@@ -1,11 +1,9 @@
 <template>
   <Header />
   <Separator />
-  <div>
-    FEATURED:
-    {{ featured.name }}
-  </div>
-  <div v-for="product in products" :key="product.id">
+  <FeaturedProduct :featured="featured" />
+  <Separator />
+  <div v-for="product in products" :key="product._id">
     {{ product.name }}
   </div>
 </template>
@@ -20,13 +18,15 @@ import Product from '../types/Product'
 
 // Components
 import Header from '../components/Header.vue'
+import FeaturedProduct from '../components/FeaturedProduct.vue'
 import Separator from '../components/Separator.vue'
 
 export default defineComponent({
   name: 'LandingCommerce',
   components: {
     Header,
-    Separator
+    Separator,
+    FeaturedProduct
   },
   setup() {
     let paginationData = ref<PaginationData>({} as PaginationData)
