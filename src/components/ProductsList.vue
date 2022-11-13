@@ -118,7 +118,7 @@ export default defineComponent({
 
       axios.post(link, bodyParameters)
         .then((res: AxiosResponse) => {
-          console.log(res)
+          this.$store.commit('setPageData', res.data.data)
         })
         .catch((err: AxiosError) => {
           console.error(err)
