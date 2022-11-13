@@ -35,7 +35,7 @@ export default defineComponent({
   flex-direction: column;
 }
 .product-card > img {
-  width: 280px;
-  height: 390px;
+  width: 282px;
+  height: 399px;
 }
 </style>
