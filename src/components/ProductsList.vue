@@ -5,8 +5,13 @@
         Photography / Premium Photos
       </h1>
       <section>
+        <button
+          id="direction-button"
+          @click="changeDirection()">
+          {{ direction }}
+        </button>
         <label>Sort by
-          <select>
+          <select @change="loadPageInfo()">
             <option
               v-for="option in orderOptions"
               :key="option"
@@ -21,7 +26,8 @@
         <section>
           <label
             v-for="category in categoryOptions"
-            :key="category">
+            :key="category"
+            @change="loadPageInfo()">
             <input
               type="checkbox"
               :value="category"
@@ -41,7 +47,7 @@
           <button 
             v-for="link in paginationData.links"
             :key="link"
-            @click="loadPage(link.url)"
+            @click="loadPageInfo(link.url)"
             :class="link.active ? 'page-active' : 'page-button'">
             {{ link.label }}
           </button>
@@ -54,12 +60,19 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import axios, { AxiosError, AxiosResponse } from 'axios'
-import Product from '../types/Product'
-import { capitalize } from '../utils/utils'
+
+// Components
 import ProductCard from '../components/ProductCard.vue'
+
+// Types
+import Product from '../types/Product'
 import PaginationData from '@/types/PaginationData'
 import OrderTerm from '../types/OrderTerm'
-import FilterTerm from '../types/FilterTerm'
+import DirectionTerm from '../types/DirectionTerm'
+import CategoryTerm from '../types/CategoryTerm'
+
+// Utils
+import { capitalize } from '../utils/utils'
 
 export default defineComponent({
   name: 'ProductsList',
@@ -80,22 +93,40 @@ export default defineComponent({
     return {
       order: 'name' as OrderTerm,
       orderOptions: ['name', 'price'] as Array<OrderTerm>,
-      categories: [] as Array<FilterTerm>,
-      categoryOptions: ['people', 'premium', 'pets', 'food', 'landmarks', 'cities', 'nature'] as Array<FilterTerm>,
+      direction: 'ASC' as DirectionTerm,
+      categories: ['people', 'premium', 'pets', 'food', 'landmarks', 'cities', 'nature'] as Array<CategoryTerm>,
+      categoryOptions: ['people', 'premium', 'pets', 'food', 'landmarks', 'cities', 'nature'] as Array<CategoryTerm>,
     }
   },
   methods: {
     capitalize,
-    loadPage(link: string | null) {
-      if (link) {
-        axios.post(link)
-          .then((res: AxiosResponse) => {
-            console.log(res)
-          })
-          .catch((err: AxiosError) => {
-            console.error(err)
-          })
+    loadPageInfo(link?: string | null) {
+      // if there's no link it will use the default one
+      console.log('loadPageInfo')
+      console.log(this.categories)
+      console.log(this.order)
+      console.log(this.direction)
+      link = link ? link : 'https://technical-frontend-api.bokokode.com/api/products'
+
+      const bodyParameters = {
+        sort: {
+          key: this.order,
+          type: this.direction
+        },
+        categories: this.categories
       }
+
+      axios.post(link, bodyParameters)
+        .then((res: AxiosResponse) => {
+          console.log(res)
+        })
+        .catch((err: AxiosError) => {
+          console.error(err)
+        })
+    },
+    changeDirection() {
+      this.direction = this.direction === 'ASC' ? 'DESC' : 'ASC'
+      this.loadPageInfo()
     }
   }
 })
@@ -110,6 +141,10 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+#direction-button {
+  background: none;
+  border: none;
 }
 #products-list-categories > section {
   display: flex;
