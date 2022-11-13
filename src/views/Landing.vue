@@ -4,7 +4,7 @@
     <Separator />
     <FeaturedProduct :featured="featured" />
     <Separator />
-    <ProductsList :products="products" />
+    <ProductsList :products="products" :paginationData="paginationData" />
   </div>
   <div v-else>
     <span>Loading...</span>
