@@ -26,6 +26,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 header {
   padding-top: 30px;
+  user-select: none
 }
 #header-items {
   display: flex;

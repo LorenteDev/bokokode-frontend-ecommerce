@@ -33,6 +33,7 @@ export default defineComponent({
     FeaturedProduct,
     ProductsList
   },
+  // TODO: Some way of loading from store every time there are changes around filters/pagination
   setup() {
     let loading = ref<boolean>(true)
     let paginationData = ref<PaginationData>({} as PaginationData)

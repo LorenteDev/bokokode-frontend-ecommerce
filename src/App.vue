@@ -19,9 +19,11 @@ export default defineComponent({
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css2?family=Archivo');
 body {
-  font-family: 'Archivo', sans-serif;
   margin: 0 auto;
   padding-bottom: 30px;
   max-width: 1440px;
+}
+body, button, select {
+  font-family: 'Archivo', sans-serif;
 }
 </style>

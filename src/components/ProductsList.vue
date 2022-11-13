@@ -2,16 +2,21 @@
   <section id="products-list">
     <section id="products-list-top">
       <h1>
-        Photography / Premium Photos
+        Photography / <span id="products-list-top-subcategory">Premium Photos</span>
       </h1>
-      <section>
+      <section id="products-list-top-sort">
         <button
-          id="direction-button"
+          id="products-list-direction-button"
           @click="changeDirection()">
-          {{ direction }}
+          <img :src="sortArrows" alt="switch sort direction">
         </button>
-        <label>Sort by
-          <select @change="loadPageInfo()">
+        <label>
+          <span id="products-list-sort-label">
+            Sort by
+          </span>
+          <select
+            @change="loadPageInfo()"
+            id="products-list-sort-select">
             <option
               v-for="option in orderOptions"
               :key="option"
@@ -27,7 +32,8 @@
           <label
             v-for="category in categoryOptions"
             :key="category"
-            @change="loadPageInfo()">
+            @change="loadPageInfo()"
+            class="products-list-categories-checkbox">
             <input
               type="checkbox"
               :value="category"
@@ -36,7 +42,7 @@
           </label>
         </section>
       </aside>
-      <section id="products-list-wrapper">
+      <section id="products-list-found-wrapper">
         <section id="products-list-found">
           <ProductCard
             v-for="product in products"
@@ -60,6 +66,9 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import axios, { AxiosError, AxiosResponse } from 'axios'
+
+// Icons
+import sortArrows from "../assets/svg/sort-arrows.svg";
 
 // Components
 import ProductCard from '../components/ProductCard.vue'
@@ -96,6 +105,7 @@ export default defineComponent({
       direction: 'ASC' as DirectionTerm,
       categories: ['people', 'premium', 'pets', 'food', 'landmarks', 'cities', 'nature'] as Array<CategoryTerm>,
       categoryOptions: ['people', 'premium', 'pets', 'food', 'landmarks', 'cities', 'nature'] as Array<CategoryTerm>,
+      sortArrows
     }
   },
   methods: {
@@ -142,18 +152,72 @@ export default defineComponent({
   justify-content: space-between;
   align-items: center;
 }
-#direction-button {
+#products-list-top > h1 {
+  font-size: 30px;
+}
+#products-list-top-subcategory {
+  color: #9B9B9B;
+  font-weight: normal;
+}
+#products-list-top-sort {
+  display: flex;
+  align-items: center;
+}
+#products-list-direction-button {
   background: none;
   border: none;
+  height: 22px;
+  width: 22px;
+  margin-right: 7px;
+}
+#products-list-direction-button > img {
+  height: 22px;
+  width: 22px;
+}
+#products-list-sort-label {
+  font-size: 24px;
+  color: #9B9B9B;
+}
+#products-list-sort-select {
+  background: none;
+  border: none;
+  font-size: 24px;
+
+}
+#products-list-categories {
+  width: 15%;
+}
+#products-list-categories > h2 {
+  margin-top: 0;
 }
 #products-list-categories > section {
   display: flex;
   flex-direction: column;
 }
+input[type="checkbox"] {
+  width: 23px;
+  height: 23px;
+  accent-color: #000;
+  background: red;
+  margin-right: 23px;
+}
+.products-list-categories-checkbox {
+  padding: 10px 0 10px 0;
+  margin: 10px 0 10px 0;
+  font-size: 22px;
+  user-select: none;
+}
+#products-list-found-wrapper {
+  // margin-left: 200px;
+}
 #products-list-found {
   display: flex;
-  align-content: flex-start;
   flex-wrap: wrap;
+  justify-content: space-between;
+}
+#products-list-found > article {
+  margin: 0 0 50px 8%;
+  width: calc(100% * (1/4));
 }
 #products-list-pagination {
   display: flex;
@@ -166,8 +230,12 @@ export default defineComponent({
 }
 .page-button {
   color: #B4B4B4;
+  font-weight: bold;
+  font-size: 29px;
 }
 .page-active {
   color: #000000;
+  font-weight: bold;
+  font-size: 29px;
 }
 </style>
