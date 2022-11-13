@@ -45,15 +45,17 @@ export default defineComponent({
         const pagination = res.data.data
         const pageProducts: Array<Product> = res.data.data.data
 
-        // Move featured one to featured ref
-        const featuredProduct = pageProducts.find((product: Product, index: number) => {
-          return product.featured ? pageProducts.splice(index, 1) : false
-        })
+        // Won't load a featured product if there's already one
+        if (!featured.value.name) {
+          // Move featured one to featured ref
+          featured.value = pageProducts.find((product: Product, index: number) => {
+            return product.featured ? pageProducts.splice(index, 1) : false
+          }) as Product
+        }
 
         // Delete 'data' key for paginationData since it's not needed
         delete pagination['data']
         paginationData.value = pagination as PaginationData
-        featured.value = featuredProduct as Product
         products.value = pageProducts as Array<Product>
         loading.value = false
       })
@@ -65,7 +67,7 @@ export default defineComponent({
     return { loading, paginationData, featured, products }
   },
   mounted() {
-    document.title = 'BAJAMAS'
+    document.title = 'BAJAMAS_'
   },
 })
 </script>
