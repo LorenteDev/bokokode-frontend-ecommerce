@@ -20,5 +20,8 @@ export default defineComponent({
 @import url('https://fonts.googleapis.com/css2?family=Archivo');
 body {
   font-family: 'Archivo', sans-serif;
+  margin: 0 auto;
+  padding: 15px 38px 20px 42px;
+  max-width: 1440px;
 }
 </style>
