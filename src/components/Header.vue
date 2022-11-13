@@ -1,19 +1,25 @@
 <template>
   <header>
-    <div id="header-items">
+    <section id="header-items">
       <span id="header-logo"> BEJAMAS_ </span>
-      <span id="header-cart"> CART </span>
-    </div>
+      <span id="header-cart">
+        <img :src="cartIcon" alt="cart">
+      </span>
+    </section>
   </header>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import cartIcon from "../assets/svg/cart.svg";
 
 export default defineComponent({
   name: 'HeaderCart',
-  // setup() {
-  // },
+  setup() {
+    return {
+      cartIcon
+    }
+  },
 })
 </script>
 
@@ -21,5 +27,14 @@ export default defineComponent({
 #header-items {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+#header-logo {
+  font-size: 26px;
+  font-weight: bold;
+}
+#header-cart {
+  height: 54px;
+  width: 54px;
 }
 </style>
