@@ -14,12 +14,7 @@
       <div>
         <h2>People also buy</h2>
         <div id="featured-also-buy">
-          <article v-for="item in featured.people_also_buy" :key="item._id">
-            <img :src="item.image.src" :alt="item.image.alt">
-            <span>{{ capitalize(item.category) }}</span>
-            <span>{{ item.name }}</span>
-            <span>{{ item.currency }} {{ item.price }}</span>
-          </article>
+          <ProductCardAlsoBuy v-for="product in featured.people_also_buy" :key="product._id" :product="product" />
         </div>
       </div>
     </div>
@@ -28,11 +23,15 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
+import ProductCardAlsoBuy from '../components/ProductCardAlsoBuy.vue'
 import Product from '../types/Product'
 import { capitalize } from '../utils/utils'
 
 export default defineComponent({
   name: 'FeaturedProduct',
+  components: {
+    ProductCardAlsoBuy
+  },
   props: {
     featured: {
       required: true,
