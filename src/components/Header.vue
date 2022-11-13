@@ -24,6 +24,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+header {
+  padding-top: 30px;
+}
 #header-items {
   display: flex;
   justify-content: space-between;
