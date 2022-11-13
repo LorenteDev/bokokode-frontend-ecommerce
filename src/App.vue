@@ -17,4 +17,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Archivo:display=swap');
+body {
+  font-family: 'Archivo', sans-serif;
+}
 </style>
