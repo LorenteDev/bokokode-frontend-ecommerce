@@ -6,7 +6,7 @@ interface PaginationData {
   from: number,
   last_page: number,
   last_page_url: string,
-  links: Array<Link[]>,
+  links: Array<Link>,
   next_page_url: string,
   path: string,
   per_page: number,
