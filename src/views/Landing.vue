@@ -4,9 +4,7 @@
     <Separator />
     <FeaturedProduct :featured="featured" />
     <Separator />
-    <div v-for="product in products" :key="product._id">
-      {{ product.name }}
-    </div>
+    <ProductsList :products="products" />
   </div>
   <div v-else>
     <span>Loading...</span>
@@ -24,6 +22,7 @@ import Product from '../types/Product'
 // Components
 import Header from '../components/Header.vue'
 import FeaturedProduct from '../components/FeaturedProduct.vue'
+import ProductsList from '../components/ProductsList.vue'
 import Separator from '../components/Separator.vue'
 
 export default defineComponent({
@@ -31,7 +30,8 @@ export default defineComponent({
   components: {
     Header,
     Separator,
-    FeaturedProduct
+    FeaturedProduct,
+    ProductsList
   },
   setup() {
     let loading = ref<boolean>(true)
