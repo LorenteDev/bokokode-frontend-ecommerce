@@ -67,7 +67,7 @@ export default defineComponent({
     return { loading, paginationData, featured, products }
   },
   mounted() {
-    document.title = 'BAJAMAS_'
+    document.title = 'BEJAMAS_'
   },
 })
 </script>
