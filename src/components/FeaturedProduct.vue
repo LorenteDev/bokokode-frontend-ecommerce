@@ -4,7 +4,10 @@
       <h1>{{ featured.name }}</h1>
       <button
         id="featured-add"
-        @click="addToCart(featured._id)">ADD TO CART</button>
+        @click="addToCart(featured._id)"
+        :disabled="[... $store.getters.getCartProducts ].includes(featured._id)">
+        {{ ![... $store.getters.getCartProducts ].includes(featured._id) ? 'ADD TO CART' : 'ADDED'}}
+      </button>
     </section>
     <section id="featured-image-wrapper">
       <div class="product-card-best-seller">
@@ -79,6 +82,9 @@ export default defineComponent({
   display: inline-flex;
   justify-content: center;
   align-items: center; 
+}
+#featured-add:disabled {
+  background: #9B9B9B;
 }
 #featured-image-wrapper {
   position: relative;

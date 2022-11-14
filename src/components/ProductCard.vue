@@ -9,7 +9,10 @@
       <img :src="product.image.src" :alt="product.image.alt">
       <button
         class="product-card-button"
-        @click="addToCart(product._id)">ADD TO CART</button>
+        @click="addToCart(product._id)"
+        :disabled="[... $store.getters.getCartProducts ].includes(product._id)">
+        {{ ![... $store.getters.getCartProducts ].includes(product._id) ? 'ADD TO CART' : 'ADDED'}}
+      </button>
     </div>
     <span class="product-card-category">{{ capitalize(product.category) }}</span>
     <span class="product-card-name">{{ product.name }}</span>
@@ -86,6 +89,9 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
 }
+.product-card-button:disabled {
+  background: #9B9B9B;
+}
 .product-card > span {
   max-width: 282px;
 }
@@ -107,6 +113,6 @@ export default defineComponent({
 }
 @keyframes show-button {
   0%   {left:0px; top:0px;}
-  100% {left:0px; top:-51px;}
+  100% {left:0px; top:-50px;}
 }
 </style>
