@@ -1,6 +1,16 @@
 <template>
   <article class="product-card">
-    <img :src="product.image.src" :alt="product.image.alt">
+    <div class="product-card-image-wrapper">
+      <div
+        v-if="product.bestseller"
+        class="product-card-best-seller">
+        <span>Best Seller</span>
+      </div>
+      <img :src="product.image.src" :alt="product.image.alt">
+      <button
+        class="product-card-button"
+        @click="addToCart(product._id)">ADD TO CART</button>
+    </div>
     <span class="product-card-category">{{ capitalize(product.category) }}</span>
     <span class="product-card-name">{{ product.name }}</span>
     <span class="product-card-currency">{{ product.currency }} {{ product.price }}</span>
@@ -9,7 +19,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { capitalize } from '../utils/utils'
+import { capitalize, addToCart } from '../utils/utils'
 import Product from '../types/Product'
 
 export default defineComponent({
@@ -21,7 +31,8 @@ export default defineComponent({
     }
   },
   methods: {
-    capitalize
+    capitalize,
+    addToCart
   }
   // setup() {
     
@@ -35,9 +46,45 @@ export default defineComponent({
   flex-direction: column;
   max-width: 282px;
 }
-.product-card > img {
+.product-card-image-wrapper {
+  position: relative;
+  height: 399px;
+  overflow: hidden;
+}
+.product-card > div > img {
   width: 282px;
   height: 399px;
+}
+.product-card-image-wrapper:hover > .product-card-button {
+  animation-name: show-button;
+  animation-duration: 0.3s;
+  animation-fill-mode: forwards;
+  // animation: show-button 0.5s forwards;
+}
+.product-card-best-seller {
+  position: absolute;
+  top: 0;
+  width: 127px;
+  height: 29px;
+  background: #fff;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.product-card-button {
+  position: relative;
+  top: 0;
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 13px 39px;
+  width: 100%;
+  height: 47px;
+  font-size: 23px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 }
 .product-card > span {
   max-width: 282px;
@@ -57,5 +104,9 @@ export default defineComponent({
   font-size: 29px;
   color: #656565;
   margin-top: 9px;
+}
+@keyframes show-button {
+  0%   {left:0px; top:0px;}
+  100% {left:0px; top:-51px;}
 }
 </style>

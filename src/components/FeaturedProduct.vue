@@ -2,7 +2,9 @@
   <section>
     <section id="featured-top">
       <h1>{{ featured.name }}</h1>
-      <button id="featured-add">ADD TO CART</button>
+      <button
+        id="featured-add"
+        @click="addToCart(featured._id)">ADD TO CART</button>
     </section>
     <img
       id="featured-image"
@@ -28,7 +30,7 @@
 import { defineComponent, PropType } from 'vue'
 import ProductCardAlsoBuy from '../components/ProductCardAlsoBuy.vue'
 import Product from '../types/Product'
-import { capitalize } from '../utils/utils'
+import { capitalize, addToCart } from '../utils/utils'
 
 export default defineComponent({
   name: 'FeaturedProduct',
@@ -42,7 +44,8 @@ export default defineComponent({
     },
   },
   methods: {
-    capitalize
+    capitalize,
+    addToCart
   }
   // setup() {
     
