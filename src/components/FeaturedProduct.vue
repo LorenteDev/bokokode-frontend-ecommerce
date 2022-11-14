@@ -6,10 +6,15 @@
         id="featured-add"
         @click="addToCart(featured._id)">ADD TO CART</button>
     </section>
-    <img
-      id="featured-image"
-      :src="featured.image.src"
-      :alt="featured.image.alt">
+    <section id="featured-image-wrapper">
+      <div class="product-card-best-seller">
+        <span>Photo of the day</span>
+      </div>
+      <img
+        id="featured-image"
+        :src="featured.image.src"
+        :alt="featured.image.alt">
+    </section>
     <section id="featured-info-section">
       <section id="featured-info">
         <h2>About the {{ featured.name }}</h2>
@@ -74,6 +79,21 @@ export default defineComponent({
   display: inline-flex;
   justify-content: center;
   align-items: center; 
+}
+#featured-image-wrapper {
+  position: relative;
+}
+#featured-image-wrapper > div {
+  position: absolute;
+  bottom: 23px;
+  width: 271px;
+  height: 67px;
+  background: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 #featured-image {
   width: 100%;
