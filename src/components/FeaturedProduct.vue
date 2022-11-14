@@ -1,12 +1,12 @@
 <template>
-  <section>
+  <section v-if="$store.getters.getFeatured">
     <section id="featured-top">
-      <h1>{{ featured.name }}</h1>
+      <h1>{{ $store.getters.getFeatured.name }}</h1>
       <button
         id="featured-add"
-        @click="addToCart(featured._id)"
-        :disabled="[... $store.getters.getCartProducts ].includes(featured._id)">
-        {{ ![... $store.getters.getCartProducts ].includes(featured._id) ? 'ADD TO CART' : 'ADDED'}}
+        @click="addToCart($store.getters.getFeatured._id)"
+        :disabled="[... $store.getters.getCartProducts ].includes($store.getters.getFeatured._id)">
+        {{ ![... $store.getters.getCartProducts ].includes($store.getters.getFeatured._id) ? 'ADD TO CART' : 'ADDED'}}
       </button>
     </section>
     <section id="featured-image-wrapper">
@@ -15,19 +15,19 @@
       </div>
       <img
         id="featured-image"
-        :src="featured.image.src"
-        :alt="featured.image.alt">
+        :src="$store.getters.getFeatured.image.src"
+        :alt="$store.getters.getFeatured.image.alt">
     </section>
     <section id="featured-info-section">
       <section id="featured-info">
-        <h2>About the {{ featured.name }}</h2>
-        <h3>{{ capitalize(featured.category) }}</h3>
-        <p>{{ featured.description }}</p>
+        <h2>About the {{ $store.getters.getFeatured.name }}</h2>
+        <h3>{{ capitalize($store.getters.getFeatured.category) }}</h3>
+        <p>{{ $store.getters.getFeatured.description }}</p>
       </section>
       <section id="featured-also-buy-section">
         <h2>People also buy</h2>
         <div id="featured-also-buy">
-          <ProductCardAlsoBuy v-for="product in featured.people_also_buy" :key="product._id" :product="product" />
+          <ProductCardAlsoBuy v-for="product in $store.getters.getFeatured.people_also_buy" :key="product._id" :product="product" />
         </div>
       </section>
     </section>
@@ -35,9 +35,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent } from 'vue'
 import ProductCardAlsoBuy from '../components/ProductCardAlsoBuy.vue'
-import Product from '../types/Product'
 import { capitalize, addToCart } from '../utils/utils'
 
 export default defineComponent({
@@ -45,16 +44,16 @@ export default defineComponent({
   components: {
     ProductCardAlsoBuy
   },
-  props: {
-    featured: {
-      required: true,
-      type: Object as PropType<Product>,
-    },
-  },
+  // props: {
+  //   featured: {
+  //     required: true,
+  //     type: Object as PropType<Product>,
+  //   },
+  // },
   methods: {
     capitalize,
     addToCart
-  }
+  },
   // setup() {
     
   // },

@@ -1,10 +1,10 @@
 <template>
-  <div v-if="!loading">
+  <div v-if="!$store.getters.loading">
     <Header />
     <Separator />
-    <FeaturedProduct :featured="featured" />
+    <FeaturedProduct />
     <Separator />
-    <ProductsList :products="products" :paginationData="paginationData" />
+    <ProductsList :products="$store.getters.products" :paginationData="$store.getters.paginationData" />
   </div>
   <div v-else>
     <span>Loading...</span>
@@ -12,7 +12,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
+import store from '../store'
 import axios, { AxiosError, AxiosResponse } from 'axios'
 
 // Types
@@ -33,39 +34,31 @@ export default defineComponent({
     FeaturedProduct,
     ProductsList
   },
-  // TODO: Some way of loading from store every time there are changes around filters/pagination
+  // Initial load
   setup() {
-    let loading = ref<boolean>(true)
-    let paginationData = ref<PaginationData>({} as PaginationData)
-    let featured = ref<Product>({} as Product)
-    let products = ref<Product[]>([])
-
     // Get all products
     axios.post('https://technical-frontend-api.bokokode.com/api/products')
       .then((res: AxiosResponse) => {
         const pagination = res.data.data
         const pageProducts: Array<Product> = res.data.data.data
 
-        // Won't load a featured product if there's already one
-        if (!featured.value.name) {
-          // Move featured one to featured ref
-          featured.value = pageProducts.find((product: Product, index: number) => {
-            return product.featured ? pageProducts.splice(index, 1) : false
-          }) as Product
-        }
+        // Move featured one to featured ref
+        const featured = pageProducts.find((product: Product, index: number) => {
+          return product.featured ? pageProducts.splice(index, 1) : false
+        }) as Product
+        store.commit('setFeatured', featured)
 
         // Delete 'data' key for paginationData since it's not needed
         delete pagination['data']
-        paginationData.value = pagination as PaginationData
-        products.value = pageProducts as Array<Product>
-        loading.value = false
+
+        store.commit('setPaginationData', pagination as PaginationData)
+        store.commit('setProducts', pageProducts as Array<Product>)
+        store.commit('setLoading', false)
       })
       .catch((err: AxiosError) => {
         console.error(err)
-        loading.value = false
+        store.commit('setLoading', false)
       })
-
-    return { loading, paginationData, featured, products }
   },
   mounted() {
     document.title = 'BEJAMAS_'

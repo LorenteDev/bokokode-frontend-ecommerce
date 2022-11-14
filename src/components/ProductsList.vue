@@ -1,5 +1,7 @@
 <template>
-  <section id="products-list">
+  <section
+    v-if="$store.getters.getProducts && $store.getters.getPaginationData"
+    id="products-list">
     <section id="products-list-top">
       <h1>
         Photography / <span id="products-list-top-subcategory">Premium Photos</span>
@@ -45,13 +47,13 @@
       <section id="products-list-found-wrapper">
         <section id="products-list-found">
           <ProductCard
-            v-for="product in products"
+            v-for="product in [ ...$store.getters.getProducts ]"
             :key="product._id"
             :product="product" />
         </section>
         <section id="products-list-pagination">
           <button 
-            v-for="link in paginationData.links"
+            v-for="link in $store.getters.getPaginationData.links"
             :key="link"
             @click="loadPageInfo(link.url)"
             :class="link.active ? 'page-active' : 'page-button'">
@@ -64,8 +66,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { defineComponent } from 'vue'
 import axios, { AxiosError, AxiosResponse } from 'axios'
+import store from '../store'
 
 // Icons
 import sortArrows from "../assets/svg/sort-arrows.svg";
@@ -75,7 +78,7 @@ import ProductCard from '../components/ProductCard.vue'
 
 // Types
 import Product from '../types/Product'
-import PaginationData from '@/types/PaginationData'
+import PaginationData from '../types/PaginationData'
 import OrderTerm from '../types/OrderTerm'
 import DirectionTerm from '../types/DirectionTerm'
 import CategoryTerm from '../types/CategoryTerm'
@@ -87,16 +90,6 @@ export default defineComponent({
   name: 'ProductsList',
   components: {
     ProductCard
-  },
-  props: {
-    products: {
-      required: true,
-      type: Array as PropType<Product[]>
-    },
-    paginationData: {
-      required: true,
-      type: Object as PropType<PaginationData>
-    }
   },
   data() {
     return {
@@ -128,7 +121,15 @@ export default defineComponent({
 
       axios.post(link, bodyParameters)
         .then((res: AxiosResponse) => {
-          this.$store.commit('setPageData', res.data.data)
+          const pagination = res.data.data
+          const pageProducts: Array<Product> = res.data.data.data
+
+          // Delete 'data' key for paginationData since it's not needed
+          delete pagination['data']
+
+          store.commit('setPaginationData', pagination as PaginationData)
+          store.commit('setProducts', pageProducts as Array<Product>)
+          store.commit('setLoading', false)
         })
         .catch((err: AxiosError) => {
           console.error(err)
