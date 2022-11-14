@@ -17,6 +17,7 @@
             Sort by
           </span>
           <select
+            v-model="order"
             @change="loadPageInfo()"
             id="products-list-sort-select">
             <option
@@ -44,7 +45,9 @@
           </label>
         </section>
       </aside>
-      <section id="products-list-found-wrapper">
+      <section
+        v-if="[ ...$store.getters.getProducts ] && [ ...$store.getters.getProducts ].length"
+        id="products-list-found-wrapper">
         <section id="products-list-found">
           <ProductCard
             v-for="product in [ ...$store.getters.getProducts ]"
@@ -56,10 +59,16 @@
             v-for="link in $store.getters.getPaginationData.links"
             :key="link"
             @click="loadPageInfo(link.url)"
+            :disabled="!link.url"
             :class="link.active ? 'page-active' : 'page-button'">
-            {{ link.label }}
+            {{ parsePaginationLabel(link.label) }}
           </button>
         </section>
+      </section>
+      <section
+        v-else
+        id="products-list-no-results">
+        No results
       </section>
     </section>
   </section>
@@ -138,6 +147,14 @@ export default defineComponent({
     changeDirection() {
       this.direction = this.direction === 'ASC' ? 'DESC' : 'ASC'
       this.loadPageInfo()
+    },
+    parsePaginationLabel (label: string) {
+      if (label === '&laquo; Previous') {
+        label = '<'
+      } else if (label === 'Next &raquo;') {        
+        label = '>'
+      }
+      return label
     }
   }
 })
@@ -186,7 +203,7 @@ export default defineComponent({
 
 }
 #products-list-categories {
-  width: 15%;
+  width: 40%;
 }
 #products-list-categories > h2 {
   margin-top: 0;
@@ -214,20 +231,26 @@ input[type="checkbox"] {
 #products-list-found {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 30px 55px;
 }
 #products-list-found > article {
-  margin: 0 0 50px 8%;
-  width: calc(100% * (1/4));
+  flex: 0 0 33.333333%;
 }
 #products-list-pagination {
   display: flex;
   justify-content: center;
   gap: 20px;
+  margin-top: 100px;
 }
 #products-list-pagination > button {
   background: none;
   border: none;
+}
+#products-list-no-results {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 .page-button {
   color: #B4B4B4;
