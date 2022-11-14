@@ -10,7 +10,7 @@
       </button>
     </section>
     <section id="featured-image-wrapper">
-      <div class="product-card-best-seller">
+      <div id="featured-image-tag">
         <span>Photo of the day</span>
       </div>
       <img
@@ -103,6 +103,9 @@ export default defineComponent({
 #featured-image {
   width: 100%;
   margin-bottom: 20px;
+}
+#featured-image-tag {
+  user-select: none;
 }
 #featured-info-section {
   display: flex;
