@@ -60,7 +60,6 @@ header {
 }
 #header-cart-container {
   display: flex;
-  justify-content: flex-end;
   align-items: center;
   width: 150px;
 }
@@ -76,6 +75,6 @@ header {
   width: 60px;
   background: none;
   border: none;
-  margin-left: 80px;
+  margin-left: 66px;
 }
 </style>
