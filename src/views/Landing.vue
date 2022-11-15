@@ -36,6 +36,7 @@ export default defineComponent({
   },
   // Initial load
   setup() {
+    store.commit('setLoading', true)
     // Get all products
     axios.post('https://technical-frontend-api.bokokode.com/api/products')
       .then((res: AxiosResponse) => {
