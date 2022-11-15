@@ -6,7 +6,7 @@
         id="featured-add"
         @click="addToCart($store.getters.getFeatured)"
         :disabled="[... $store.getters.getCartProducts ].find(cart => cart._id === $store.getters.getFeatured._id)">
-        {{ ![... $store.getters.getCartProducts ].includes($store.getters.getFeatured._id) ? 'ADD TO CART' : 'ADDED'}}
+        {{ ![... $store.getters.getCartProducts ].find(cart => cart._id === $store.getters.getFeatured._id) ? 'ADD TO CART' : 'ADDED'}}
       </button>
     </section>
     <section id="featured-image-wrapper">

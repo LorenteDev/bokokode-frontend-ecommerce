@@ -6,6 +6,7 @@ import PaginationData from '@/types/PaginationData'
 
 export default createStore({
   state: {
+    isCartDialogOpen: false,
     cartProducts: [] as Array<Product>,
     loading: true,
     paginationData: null as null | PaginationData,
@@ -13,6 +14,7 @@ export default createStore({
     products: null as null | Array<Product>
   },
   getters: {
+    isCartDialogOpen: ({isCartDialogOpen}) => isCartDialogOpen,
     getCartProducts: ({cartProducts}) => cartProducts,
     isLoading: ({loading}) => loading,
     getPaginationData: ({paginationData}) => paginationData,
@@ -20,8 +22,14 @@ export default createStore({
     getProducts: ({products}) => products
   },
   mutations: {
+    setCartDialog (state, isOpen: boolean) {
+      state.isCartDialogOpen = isOpen
+    },
     addCartProduct (state, product: Product) {
       state.cartProducts.push(product)
+    },
+    clearCartProducts (state) {
+      state.cartProducts = []
     },
     setLoading (state, value: boolean) {
       state.loading = value

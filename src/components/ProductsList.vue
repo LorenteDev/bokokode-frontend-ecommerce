@@ -114,10 +114,6 @@ export default defineComponent({
     capitalize,
     loadPageInfo(link?: string | null) {
       // if there's no link it will use the default one
-      console.log('loadPageInfo')
-      console.log(this.categories)
-      console.log(this.order)
-      console.log(this.direction)
       link = link ? link : 'https://technical-frontend-api.bokokode.com/api/products'
 
       const bodyParameters = {

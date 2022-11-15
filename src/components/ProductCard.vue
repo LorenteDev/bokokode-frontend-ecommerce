@@ -11,7 +11,7 @@
         class="product-card-button"
         @click="addToCart(product)"
         :disabled="[... $store.getters.getCartProducts ].find(cart => cart._id === product._id)">
-        {{ ![... $store.getters.getCartProducts ].includes(product._id) ? 'ADD TO CART' : 'ADDED'}}
+        {{ ![... $store.getters.getCartProducts ].find(cart => cart._id === product._id) ? 'ADD TO CART' : 'ADDED'}}
       </button>
     </div>
     <span class="product-card-category">{{ capitalize(product.category) }}</span>

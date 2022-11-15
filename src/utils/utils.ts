@@ -8,6 +8,6 @@ export function capitalize(string: string) {
 export function addToCart(product: Product) {
   if (![... store.getters.getCartProducts ].find(cart => cart._id === product._id)) {
     store.commit('addCartProduct', product)
+    store.commit('setCartDialog', true)
   }
-  console.log(store.getters.getCartProducts)
 }
