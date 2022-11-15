@@ -2,9 +2,9 @@
   <header>
     <section id="header-items">
       <span id="header-logo"> BEJAMAS_ </span>
-      <span id="header-cart">
+      <button id="header-cart">
         <img :src="cartIcon" alt="cart">
-      </span>
+      </button>
     </section>
   </header>
 </template>
@@ -38,7 +38,9 @@ header {
   font-weight: bold;
 }
 #header-cart {
-  height: 54px;
-  width: 54px;
+  height: 60px;
+  width: 60px;
+  background: none;
+  border: none;
 }
 </style>
