@@ -38,7 +38,9 @@ export default defineComponent({
   },
   methods: {
     openDialog() {
-      store.commit('setCartDialog', true)
+      if (store.getters.getCartProducts.length) {
+        store.commit('setCartDialog', true)
+      }
     }
   }
 })
@@ -61,6 +63,7 @@ header {
 #header-cart-container {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   width: 150px;
 }
 #header-badge-total {

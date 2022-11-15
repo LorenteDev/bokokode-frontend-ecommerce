@@ -78,12 +78,15 @@ export default defineComponent({
 }
 .cart-dialog-product {
   display: flex;
+  justify-content: space-between;
   align-items: flex-start;
+}
+.cart-dialog-product > div {
+  width: 50%;
 }
 .cart-dialog-product > div > h2 {
   font-size: 20px;
   margin-bottom: 10px;
-  width: 80%;
 }
 .cart-dialog-product > div > span {
   font-size: 29px;
@@ -91,7 +94,7 @@ export default defineComponent({
 }
 .cart-dialog-product > img {
   width: 200px;
-  height: 100px;
+  min-height: 100px;
 }
 #cart-dialog > hr {
   color: #C2C2C2;
