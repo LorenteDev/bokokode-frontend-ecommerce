@@ -4,8 +4,8 @@
       <h1>{{ $store.getters.getFeatured.name }}</h1>
       <button
         id="featured-add"
-        @click="addToCart($store.getters.getFeatured._id)"
-        :disabled="[... $store.getters.getCartProducts ].includes($store.getters.getFeatured._id)">
+        @click="addToCart($store.getters.getFeatured)"
+        :disabled="[... $store.getters.getCartProducts ].find(cart => cart._id === $store.getters.getFeatured._id)">
         {{ ![... $store.getters.getCartProducts ].includes($store.getters.getFeatured._id) ? 'ADD TO CART' : 'ADDED'}}
       </button>
     </section>

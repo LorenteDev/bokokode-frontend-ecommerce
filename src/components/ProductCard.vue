@@ -9,8 +9,8 @@
       <img :src="product.image.src" :alt="product.image.alt">
       <button
         class="product-card-button"
-        @click="addToCart(product._id)"
-        :disabled="[... $store.getters.getCartProducts ].includes(product._id)">
+        @click="addToCart(product)"
+        :disabled="[... $store.getters.getCartProducts ].find(cart => cart._id === product._id)">
         {{ ![... $store.getters.getCartProducts ].includes(product._id) ? 'ADD TO CART' : 'ADDED'}}
       </button>
     </div>
