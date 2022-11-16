@@ -2,7 +2,10 @@
   <section
     v-if="$store.getters.isCartDialogOpen"
     id="cart-dialog">
-    <div id="cart-dialog-close">
+    <div id="cart-dialog-top">
+      <span>TOTAL:  
+        <span id="cart-dialog-total">{{ $store.getters.getCartProducts[0].currency }} {{ $store.getters.getCartProducts.reduce(reduceGetTotal, 0) }}</span>
+      </span>
       <button @click="closeDialog()">
         <img :src="closeIcon" alt="close">
       </button>
@@ -30,13 +33,17 @@
 
 <script lang="ts">
 import store from '@/store';
+import Product from '@/types/Product';
 import { defineComponent } from 'vue'
 import closeIcon from "../assets/svg/close.svg";
 
 export default defineComponent({
   name: 'CartDialog',
   data () {
-    return { closeIcon }
+    return {
+      closeIcon,
+      total: 0
+    }
   },
   methods: {
     closeDialog() {
@@ -45,7 +52,10 @@ export default defineComponent({
     clearCart() {
       store.commit('clearCartProducts')
       this.closeDialog()
-    }
+    },
+    reduceGetTotal(total: number, product: Product) {
+      return total + product.price
+    } 
   }
 })
 </script>
@@ -61,17 +71,23 @@ export default defineComponent({
   border: 4px solid #e4e4e4;
   z-index: 1;
 }
-#cart-dialog-close {
+#cart-dialog-top {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 25px;
+  font-size: 20px;
+}
+#cart-dialog-total {
+  color: #656565;
+  font-size: 29px;
 }
 #cart-dialog-products-container {
   display: flex;
   flex-direction: column;
   gap: 30px;
 }
-#cart-dialog-close > button {
+#cart-dialog-top > button {
   background: none;
   border: none;
   padding: 0;
