@@ -1,5 +1,8 @@
 # bokokode-frontend-ecommerce
 
+## Hosting
+This project is being hosted in [firebase](https://bokokode-frontend-ecommerce.web.app/) in case you prefer to check it directly
+
 ## Project setup
 ```
 npm install
@@ -19,6 +22,7 @@ npm run build
 ```
 npm run lint
 ```
+
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
