@@ -20,9 +20,13 @@ export default defineComponent({
 @import url('https://fonts.googleapis.com/css2?family=Archivo');
 body {
   margin: 0 auto;
-  padding-bottom: 30px;
+  padding-bottom: 60px;
   width: 90vw;
   max-width: 1440px;
+}
+img {
+  pointer-events: none;
+  user-select: none;
 }
 body, button, select {
   font-family: 'Archivo', sans-serif;

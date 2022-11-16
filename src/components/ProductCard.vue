@@ -130,6 +130,7 @@ export default defineComponent({
   .product-card > div > img {
     height: 100%;
     width: 100%;
+    user-select: none;
   }
   .product-card-category {
     margin-top: 19px;

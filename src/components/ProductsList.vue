@@ -12,8 +12,8 @@
           @click="changeDirection()">
           <img :src="sortArrows" alt="switch sort direction">
         </button>
-        <label>
-          <span id="products-list-sort-label">
+        <label id="products-list-sort">
+          <span>
             Sort by
           </span>
           <select
@@ -26,7 +26,49 @@
               :value="option">{{ capitalize(option) }}</option>
           </select>
         </label>
+        <button
+          id="products-list-filter-open"
+          @click="openFilter()">
+          <img :src="filterIcon" alt="filter">
+        </button>
       </section>
+    </section>
+    <section
+      v-if="isFilterOpen"
+      id="products-list-filter-container">
+      <div id="products-list-filter">
+        <section id="products-list-filter-top">
+          <h2>Filter</h2>
+          <button
+            id="products-list-filter-close"
+            @click="closeFilter()">
+            <img :src="closeIcon" alt="close">
+          </button>
+        </section>
+        <section id="products-list-filter-categories">
+          <label
+            v-for="category in categoryOptions"
+            :key="category"
+            class="products-list-filter-categories-checkbox">
+            <input
+              type="checkbox"
+              :value="category"
+              v-model="categoriesFilter">
+            {{ capitalize(category) }}
+          </label>
+        </section>
+        <section id="products-list-filter-actions-container">
+          <hr />
+          <section id="products-list-filter-actions">
+            <button
+              id="products-list-filter-clear"
+              @click="clearFilter()">CLEAR</button>
+            <button
+              id="products-list-filter-save"
+              @click="saveFilter()">SAVE</button>
+          </section>
+        </section>
+      </div>
     </section>
     <section id="products-list-content">
       <aside id="products-list-categories">
@@ -81,6 +123,9 @@ import store from '../store'
 
 // Icons
 import sortArrows from "../assets/svg/sort-arrows.svg";
+import filterIcon from "../assets/png/filter.png";
+import closeIcon from "../assets/svg/close.svg";
+
 
 // Components
 import ProductCard from '../components/ProductCard.vue'
@@ -106,8 +151,12 @@ export default defineComponent({
       orderOptions: ['name', 'price'] as Array<OrderTerm>,
       direction: 'ASC' as DirectionTerm,
       categories: ['people', 'premium', 'pets', 'food', 'landmarks', 'cities', 'nature'] as Array<CategoryTerm>,
+      categoriesFilter: ['people', 'premium', 'pets', 'food', 'landmarks', 'cities', 'nature'] as Array<CategoryTerm>,
       categoryOptions: ['people', 'premium', 'pets', 'food', 'landmarks', 'cities', 'nature'] as Array<CategoryTerm>,
-      sortArrows
+      isFilterOpen: false,
+      sortArrows,
+      filterIcon,
+      closeIcon
     }
   },
   methods: {
@@ -155,6 +204,22 @@ export default defineComponent({
         label = '>'
       }
       return label
+    },
+    openFilter() {
+      this.categoriesFilter = [ ...this.categories ]
+      this.isFilterOpen = true
+    },
+    closeFilter() {
+      this.isFilterOpen = false
+    },
+    clearFilter() {
+      this.categoriesFilter = [ ...this.categoryOptions ]
+      this.closeFilter()
+    },
+    saveFilter () {
+      this.categories = [ ...this.categoriesFilter ]
+      this.loadPageInfo()
+      this.closeFilter()
     }
   }
 })
@@ -164,11 +229,13 @@ export default defineComponent({
 #products-list-content {
   display: flex;
   justify-content: space-between;
+  user-select: none;
 }
 #products-list-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  user-select: none;
 }
 #products-list-top > h1 {
   font-size: 30px;
@@ -192,7 +259,7 @@ export default defineComponent({
   height: 22px;
   width: 22px;
 }
-#products-list-sort-label {
+#products-list-sort > span {
   font-size: 24px;
   color: #9B9B9B;
 }
@@ -200,6 +267,82 @@ export default defineComponent({
   background: none;
   border: none;
   font-size: 24px;
+}
+#products-list-filter-container {
+  display: none;
+  background: #3b3b3b3a;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  user-select: none;
+}
+#products-list-filter {
+  display: none;
+  width: 90vw;
+  overflow: scroll;
+}
+#products-list-filter-actions-container {
+  position: fixed;
+  bottom: 0;
+  width: 90%;
+  padding-bottom: 30px;
+  background: #fff;
+}
+#products-list-filter-actions-container > hr{
+  height: 4px;
+  border: none;
+  background-color: #e4e4e4;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+#products-list-filter-actions {
+  display: flex;
+  justify-content: space-between;
+  float: bottom;
+}
+#products-list-filter-actions > button {
+  width: 47%;
+  height: 48px;
+  font-size: 23px;
+}
+#products-list-filter-clear {
+  background: #fff;
+  color: #000;
+  border: 3px solid #000;
+}
+#products-list-filter-save {
+  background: #000;
+  color: #fff;
+  border: 3px solid #000;
+}
+#products-list-filter-open {
+  display: none;
+}
+#products-list-filter-top {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+#products-list-filter-top > h2 {
+  font-size: 34px;
+  margin: 0;
+}
+#products-list-filter-close {
+  background: none;
+  border: none;
+  padding: 0;
+}
+#products-list-filter-close > img {
+  background: none;
+  border: none;
+  padding: 0;
+  height: 40px;
+  width: 40px;
 }
 #products-list-categories {
   width: 40%;
@@ -218,11 +361,21 @@ input[type="checkbox"] {
   background: red;
   margin-right: 23px;
 }
+.products-list-filter-categories-checkbox,
 .products-list-categories-checkbox {
   padding: 10px 0 10px 0;
   margin: 10px 0 10px 0;
   font-size: 22px;
   user-select: none;
+}
+.products-list-filter-categories-checkbox {
+  font-size: 28px;
+}
+#products-list-filter-categories {
+  display: flex;
+  flex-direction: column;
+  height: 60vh;
+  overflow: scroll;
 }
 #products-list-found-wrapper {
   // margin-left: 200px;
@@ -232,7 +385,7 @@ input[type="checkbox"] {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 30px 55px;
+  gap: 30px;
 }
 #products-list-pagination {
   display: flex;
@@ -250,6 +403,7 @@ input[type="checkbox"] {
   width: 100%;
   display: flex;
   justify-content: center;
+  margin-bottom: 60px;
 }
 .page-button {
   color: #B4B4B4;
@@ -263,7 +417,7 @@ input[type="checkbox"] {
   font-weight: bold;
   font-size: 29px;
 }
-@media only screen and (max-width: 962px) {
+@media only screen and (max-width: 924px) {
   #products-list-found {
     justify-content: center;
   }
@@ -272,8 +426,30 @@ input[type="checkbox"] {
   #products-list-top > h1 {
     font-size: 18px;
   }
-  #products-list-top-sort {
+  #products-list-direction-button,
+  #products-list-sort {
     display: none;
+  }
+  #products-list-filter-open {
+    display: block;
+    background: none;
+    border: none;
+  }
+  #products-list-filter-container {
+    display: block;
+  }
+  #products-list-filter {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background: #fff;
+    height: 85vh;
+    padding: 5%;
+  }
+  #products-list-filter-open > img {
+    height: 30px;
+    width: 30px;
   }
   #products-list-categories {
     display: none;

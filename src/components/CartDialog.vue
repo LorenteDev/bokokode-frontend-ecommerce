@@ -107,4 +107,16 @@ export default defineComponent({
   background-color: white;
   border: 3px solid #000000;
 }
+@media only screen and (max-width: 768px) {
+  #cart-dialog {
+    position: absolute;
+    top: 120px;
+    left: 0;
+    width: calc(100vw - 78px);
+  }
+  #cart-dialog-products-container {
+    height: 320px;
+    overflow: scroll;
+  }
+}
 </style>

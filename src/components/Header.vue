@@ -80,4 +80,9 @@ header {
   border: none;
   margin-left: 66px;
 }
+@media only screen and (max-width: 768px) {
+  #header-cart {
+    margin-left: 20px;
+  }
+}
 </style>
