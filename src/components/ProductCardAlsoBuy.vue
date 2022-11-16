@@ -55,4 +55,14 @@ export default defineComponent({
   font-size: 15px;
   color: #656565;
 }
+
+@media only screen and (max-width: 768px) {
+  .product-card-also-buy > img {
+    width: 102px;
+    height: 131px;
+  }
+  .product-card-also-buy > span {
+    max-width: 102px;
+  }
+}
 </style>

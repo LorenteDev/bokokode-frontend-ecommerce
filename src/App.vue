@@ -26,4 +26,9 @@ body {
 body, button, select {
   font-family: 'Archivo', sans-serif;
 }
+@media only screen and (max-width: 1440px) {
+  body {
+    width: 90%;
+  }
+}
 </style>

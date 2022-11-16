@@ -1,5 +1,7 @@
 <template>
-  <section v-if="$store.getters.getFeatured">
+  <section
+    v-if="$store.getters.getFeatured"
+    id="featured-product">
     <section id="featured-top">
       <h1>{{ $store.getters.getFeatured.name }}</h1>
       <button
@@ -18,6 +20,12 @@
         :src="$store.getters.getFeatured.image.src"
         :alt="$store.getters.getFeatured.image.alt">
     </section>
+    <button
+      id="featured-add-below"
+      @click="addToCart($store.getters.getFeatured)"
+      :disabled="[... $store.getters.getCartProducts ].find(cart => cart._id === $store.getters.getFeatured._id)">
+      {{ ![... $store.getters.getCartProducts ].find(cart => cart._id === $store.getters.getFeatured._id) ? 'ADD TO CART' : 'ADDED'}}
+    </button>
     <section id="featured-info-section">
       <section id="featured-info">
         <h2>About the {{ $store.getters.getFeatured.name }}</h2>
@@ -61,6 +69,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+#featured-product {
+  margin-bottom: 100px;
+}
 #featured-top {
   display: flex;
   justify-content: space-between;
@@ -70,17 +81,24 @@ export default defineComponent({
   margin: 0;
   font-size: 32px;
 }
+#featured-add-below,
 #featured-add {
   background: #000;
   color: #fff;
   border: none;
   padding: 13px 39px;
-  width: 257px;
   height: 47px;
   font-size: 23px;
   display: inline-flex;
   justify-content: center;
   align-items: center; 
+}
+#featured-add {
+  width: 257px;
+}
+#featured-add-below {
+  display: none;
+  width: 100%;
 }
 #featured-add:disabled {
   background: #9B9B9B;
@@ -88,24 +106,22 @@ export default defineComponent({
 #featured-image-wrapper {
   position: relative;
 }
-#featured-image-wrapper > div {
-  position: absolute;
-  bottom: 23px;
-  width: 271px;
-  height: 67px;
-  background: #fff;
-  font-size: 20px;
-  font-weight: bold;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 #featured-image {
   width: 100%;
   margin-bottom: 20px;
 }
 #featured-image-tag {
   user-select: none;
+  position: absolute;
+  bottom: 23px;
+  width: 19%;
+  height: 11%;
+  background: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 #featured-info-section {
   display: flex;
@@ -122,8 +138,6 @@ export default defineComponent({
 #featured-info {
   width: 60%;
 }
-#featured-also-buy-section {
-}
 #featured-also-buy-section > h2 {
   text-align: end;
   margin-bottom: 27px;
@@ -135,8 +149,38 @@ export default defineComponent({
   justify-content: center;
   gap: 30px;
 }
-#featured-also-buy > article {
-  display: flex;
-  flex-direction: column;
+@media only screen and (max-width: 938px) {
+  #featured-image-tag {
+    font-size: 15px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  #featured-image-tag {
+    width: 60%;
+    height: 20%;
+  }
+  #featured-add {
+    display: none;
+  }
+  #featured-add-below {
+    display: flex;
+  }
+  #featured-info-section {
+    flex-direction: column;
+  }
+  #featured-info {
+    width: 100%;
+  }
+  #featured-also-buy-section > h2 {
+    text-align: start;
+  }
+  #featured-also-buy {
+    justify-content: space-around;
+    // gap: 20%;
+  }
+  #featured-also-buy > article {
+    display: flex;
+    flex-direction: column;
+  }
 }
 </style>
