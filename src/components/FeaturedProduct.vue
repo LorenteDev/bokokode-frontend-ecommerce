@@ -100,6 +100,7 @@ export default defineComponent({
   display: none;
   width: 100%;
 }
+#featured-add-below:disabled,
 #featured-add:disabled {
   background: #9B9B9B;
 }
