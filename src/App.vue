@@ -21,14 +21,10 @@ export default defineComponent({
 body {
   margin: 0 auto;
   padding-bottom: 30px;
+  width: 90vw;
   max-width: 1440px;
 }
 body, button, select {
   font-family: 'Archivo', sans-serif;
-}
-@media only screen and (max-width: 1440px) {
-  body {
-    width: 90%;
-  }
 }
 </style>
