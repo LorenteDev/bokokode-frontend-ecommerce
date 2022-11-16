@@ -5,13 +5,12 @@
       <div id="header-cart-container">
         <button
           v-if="$store.getters.getCartProducts.length"
-          id="header-badge-total"
-          @click="openDialog()">
+          id="header-badge-total">
           {{ $store.getters.getCartProducts.length }}
         </button>
         <button
           id="header-cart"
-          @click="openDialog()">
+          @click="toggleCart()">
           <img :src="cartIcon" alt="cart">
         </button>
       </div>
@@ -37,9 +36,9 @@ export default defineComponent({
     }
   },
   methods: {
-    openDialog() {
+    toggleCart() {
       if (store.getters.getCartProducts.length) {
-        store.commit('setCartDialog', true)
+        store.commit('setCartDialog', !store.getters.isCartDialogOpen)
       }
     }
   }
