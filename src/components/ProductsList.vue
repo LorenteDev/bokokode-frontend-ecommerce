@@ -135,6 +135,10 @@ export default defineComponent({
           store.commit('setPaginationData', pagination as PaginationData)
           store.commit('setProducts', pageProducts as Array<Product>)
           store.commit('setLoading', false)
+          const top: HTMLElement | null = document.getElementById('products-list-top')
+          if (top) {
+           top.scrollIntoView({behavior: "smooth"})
+          }
         })
         .catch((err: AxiosError) => {
           console.error(err)
@@ -196,7 +200,6 @@ export default defineComponent({
   background: none;
   border: none;
   font-size: 24px;
-
 }
 #products-list-categories {
   width: 40%;
@@ -223,21 +226,21 @@ input[type="checkbox"] {
 }
 #products-list-found-wrapper {
   // margin-left: 200px;
+  width: 100%;
 }
 #products-list-found {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: space-between;
   gap: 30px 55px;
-}
-#products-list-found > article {
-  flex: 0 0 33.333333%;
 }
 #products-list-pagination {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 13px;
+  flex-wrap: wrap;
   margin-top: 100px;
+  width: 100%;
 }
 #products-list-pagination > button {
   background: none;
@@ -253,9 +256,40 @@ input[type="checkbox"] {
   font-weight: bold;
   font-size: 29px;
 }
+#products-list-pagination > button:first-child,
+#products-list-pagination > button:last-child,
 .page-active {
   color: #000000;
   font-weight: bold;
   font-size: 29px;
+}
+@media only screen and (max-width: 962px) {
+  #products-list-found {
+    justify-content: center;
+  }
+}
+@media only screen and (max-width: 768px) {
+  #products-list-top > h1 {
+    font-size: 18px;
+  }
+  #products-list-top-sort {
+    display: none;
+  }
+  #products-list-categories {
+    display: none;
+  }
+  #products-list-found {
+    justify-content: center;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    gap: 30px;
+  }
+  #products-list-pagination {
+    gap: 15px;
+  }
+  #products-list-pagination > button {
+    background: none;
+    border: none;
+  }
 }
 </style>

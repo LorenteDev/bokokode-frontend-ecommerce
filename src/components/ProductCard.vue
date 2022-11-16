@@ -67,8 +67,8 @@ export default defineComponent({
 .product-card-best-seller {
   position: absolute;
   top: 0;
-  width: 127px;
-  height: 29px;
+  width: 40%;
+  height: 8%;
   background: #fff;
   font-size: 20px;
   display: flex;
@@ -115,5 +115,37 @@ export default defineComponent({
 @keyframes show-button {
   0%   {left:0px; top:0px;}
   100% {left:0px; top:-50px;}
+}
+@media only screen and (max-width: 768px) {
+  .product-card {
+    max-width: 100%;
+    height: 100%;
+  }
+  .product-card-image-wrapper {
+    position: relative;
+    height: 399px;
+    overflow: hidden;
+    height: 100%;
+  }
+  .product-card > div > img {
+    height: 100%;
+    width: 100%;
+  }
+  .product-card-category {
+    margin-top: 19px;
+  }
+  .product-card-name {
+    margin-top: 13px;
+  }
+  .product-card-currency {
+    margin-top: 13px;
+  }
+  .product-card-image-wrapper:hover > .product-card-button {
+    animation-name: none;
+  }
+  .product-card-button {
+    top: -50px;
+    width: 100%;
+  }
 }
 </style>
