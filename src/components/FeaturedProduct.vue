@@ -149,21 +149,21 @@ export default defineComponent({
   justify-content: center;
   gap: 30px;
 }
-@media only screen and (max-width: 938px) {
+@media only screen and (max-width: 956px) {
   #featured-image-tag {
     font-size: 15px;
-  }
-}
-@media only screen and (max-width: 768px) {
-  #featured-image-tag {
-    width: 60%;
-    height: 20%;
   }
   #featured-add {
     display: none;
   }
   #featured-add-below {
     display: flex;
+  }
+}
+@media only screen and (max-width: 768px) {
+  #featured-image-tag {
+    width: 60%;
+    height: 20%;
   }
   #featured-info-section {
     flex-direction: column;
