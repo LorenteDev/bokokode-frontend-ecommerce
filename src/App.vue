@@ -12,6 +12,9 @@ export default defineComponent({
   name: 'App',
   components: {
     Landing
+  },
+  beforeCreate() {
+    document.title = 'BEJAMAS_'
   }
 });
 </script>

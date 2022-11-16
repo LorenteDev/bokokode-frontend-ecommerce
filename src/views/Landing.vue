@@ -71,10 +71,7 @@ export default defineComponent({
         console.error(err)
         store.commit('setLoading', false)
       })
-  },
-  mounted() {
-    document.title = 'BEJAMAS_'
-  },
+  }
 })
 </script>
 
