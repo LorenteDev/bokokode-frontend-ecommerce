@@ -52,19 +52,10 @@ export default defineComponent({
   components: {
     ProductCardAlsoBuy
   },
-  // props: {
-  //   featured: {
-  //     required: true,
-  //     type: Object as PropType<Product>,
-  //   },
-  // },
   methods: {
     capitalize,
     addToCart
   },
-  // setup() {
-    
-  // },
 })
 </script>
 

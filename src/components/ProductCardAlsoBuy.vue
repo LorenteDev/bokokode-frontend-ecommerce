@@ -23,9 +23,6 @@ export default defineComponent({
   methods: {
     capitalize
   }
-  // setup() {
-    
-  // },
 })
 </script>
 

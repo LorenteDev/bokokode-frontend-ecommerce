@@ -37,9 +37,6 @@ export default defineComponent({
     capitalize,
     addToCart
   }
-  // setup() {
-    
-  // },
 })
 </script>
 
@@ -62,7 +59,6 @@ export default defineComponent({
   animation-name: show-button;
   animation-duration: 0.3s;
   animation-fill-mode: forwards;
-  // animation: show-button 0.5s forwards;
 }
 .product-card-best-seller {
   position: absolute;
