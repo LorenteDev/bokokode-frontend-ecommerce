@@ -399,6 +399,9 @@ input[type="checkbox"] {
   background: none;
   border: none;
 }
+#products-list-pagination > button:hover {
+  text-decoration: underline;
+}
 #products-list-no-results {
   width: 100%;
   display: flex;
